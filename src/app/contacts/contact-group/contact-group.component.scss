@@ -1,0 +1,11 @@
+
+@import '../../../assets/common.scss';
+
+.group-container {
+    padding-top: 30px;
+    .group-header, .group-body{
+        border: solid 1px #dee2e6;
+        padding: 8px;
+        border-radius: 5px;
+    }
+}

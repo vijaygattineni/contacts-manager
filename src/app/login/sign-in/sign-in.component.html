@@ -1,0 +1,22 @@
+<form [formGroup]="signInForm" autocomplete="off">
+  <h3>Sign In</h3>
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example1">Email address</label>
+    <input type="email" class="form-control" formControlName="email" />
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example2">Password</label>
+    <input type="password" id="form2Example2" class="form-control" formControlName="password" />
+  </div>
+
+  <!-- Submit button -->
+  <button type="button" [ngClass]="{'disabled' : signInForm.invalid }" class="btn btn-primary btn-block mb-4" (click)="submitSignIn()">Sign in</button>
+
+  <!-- Register buttons -->
+  <div class="text-center">
+    <p>Not a member? <span class="hand" (click)="showSignUpForm()">Sign Up</span></p>
+  </div>
+</form>

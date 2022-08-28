@@ -1,0 +1,73 @@
+<section class="sign-up-container">
+  <form [formGroup]="signUpForm" autocomplete="off">
+    <h3>Sign Up</h3>
+    <!-- FirstName input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="firstName">First Name</label>
+      <input type="text" class="form-control" formControlName="firstName" />
+      <div>
+        <span class="error-text"
+          *ngIf="signUpForm['controls'].firstName.touched && signUpForm['controls'].firstName.hasError('required')">Please
+          enter first name</span>
+        <span class="error-text"
+          *ngIf="signUpForm['controls'].firstName.touched && signUpForm['controls'].firstName.hasError('minlength')">Please
+          enter min 3 character</span>
+      </div>
+    </div>
+
+    <!-- LastName input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="lastName">Last Name</label>
+      <input type="text" class="form-control" formControlName="lastName" />
+      <div>
+        <span class="error-text"
+          *ngIf="signUpForm['controls'].lastName.touched && signUpForm['controls'].lastName.hasError('required')">Please
+          enter last name</span>
+        <span class="error-text"
+          *ngIf="signUpForm['controls'].lastName.touched && signUpForm['controls'].lastName.hasError('minlength')">Please
+          enter min 3 character</span>
+      </div>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example1">Email address</label>
+      <input type="email" class="form-control" formControlName="email" />
+      <span class="error-text"
+        *ngIf="signUpForm['controls'].email.touched && signUpForm['controls'].email.hasError('required')">Please
+        enter Email</span>
+      <span class="error-text"
+        *ngIf="signUpForm['controls'].email.touched && signUpForm['controls'].email.errors?.pattern">Please enter valid
+        email. should end with {{DOMAIN_NAME}}
+      </span>
+    </div>
+
+    <!-- Aadhar input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Aadhar</label>
+      <input type="text" id="form2Example2" class="form-control" formControlName="aadhar" />
+      <span class="error-text"
+        *ngIf="signUpForm['controls'].aadhar.touched && signUpForm['controls'].aadhar.errors?.pattern">Please enter
+        valid Aadhar. Valid Aadhar should have 12 digits</span>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Password</label>
+      <input type="password" id="form2Example2" class="form-control" formControlName="password" />
+      <div class="error-text"
+        *ngIf="signUpForm['controls'].password.touched && signUpForm['controls'].password.errors?.pattern">
+        Valid password should have
+        <ul>
+          <li>At least one Alphabet</li>
+          <li>At least one Numeric</li>
+          <li>Minimum 8 characters</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <button type="button" [ngClass]="{'disabled' : signUpForm.invalid }" class="btn btn-primary btn-block mb-4"
+      (click)="submitSignUp()">Sign Up</button>
+  </form>
+</section>

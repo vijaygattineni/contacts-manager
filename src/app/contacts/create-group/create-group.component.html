@@ -1,0 +1,13 @@
+<div class="col-md-4 create-group-container">
+  <h6>Create Group</h6>
+  <form #groupCreateForm="ngForm" (ngSubmit)="registerGroup(groupCreateForm)">
+    <input type="text" name="name" ngModel placeholder="Enter Group Name..." required>
+    <div class="p-t-8">
+      <input type="checkbox" name="active" ngModel> Active
+    </div>
+    <div class="p-t-8">
+      <button [ngClass]="{'disabled' : groupCreateForm.invalid }" type="button" class="btn btn-primary btn-sm"
+        (click)="registerGroup(groupCreateForm)">Create</button>
+    </div>
+  </form>
+</div>

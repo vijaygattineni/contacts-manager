@@ -1,0 +1,112 @@
+<div class="group-container">
+  <div class="row group-header">
+    <div class="col-md-6">
+      <h5> Group Name: {{groupDetail.name}}</h5>
+      <div>
+        <input type="checkbox" [checked]="groupDetail.active"
+          (change)="groupDetail.active = !groupDetail.active">{{groupDetail.active ? ' Active': ' In Active'}}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="text-align:right">
+        <button type="button" (click)="open(content, groupDetail,MODE.ADD)" class="btn btn-info btn-sm">+ Add
+          Contact</button>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="groupDetail.contacts && groupDetail.contacts.length">
+    <input id="table-complete-search" type="text" class="form-control" name="searchTerm" placeholder="Search..."
+      (keyup)="searchContact($event.target.value)" [(ngModel)]="searchTerm">
+  </div>
+  <div class="row group-body">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col"
+            (click)="sort(pageConfig.sortBy,pageConfig.directionAsc);pageConfig.directionAsc = !pageConfig.directionAsc ">
+            Name
+            <img src="./assets/up-arrow.svg" *ngIf="pageConfig.directionAsc">
+            <img src="./assets/down-arrow.svg" *ngIf="!pageConfig.directionAsc">
+          </th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of transformedContacts;let i = index; ">
+          <th scope="row">{{i+1}}</th>
+          <td>{{contact.name}}</td>
+          <td>{{contact.email}}</td>
+          <td>{{contact.phone}}</td>
+          <td>
+            <input type="checkbox" [checked]="contact.status === 'active'" (change)="changeStatus(contact)"> <span
+              class="text-capitalize"> {{contact.status}}</span>
+          </td>
+          <td>
+            <img class="hand" alt="Edit" src="./assets/edit.svg" (click)="open(content, groupDetail,'edit',contact, i)">
+          </td>
+          <td>
+            <img class="hand" alt="Remove" src="./assets/trash.svg" (click)="deleteContact(contact,i)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2" *ngIf="searchTerm.length === 0 && groupDetail.contacts.length">
+      <ngb-pagination [collectionSize]="groupDetail.contacts.length" [(page)]="pageConfig.page"
+        [pageSize]="pageConfig.pageSize" (pageChange)="transformContacts()">
+      </ngb-pagination>
+
+      <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="pageConfig.pageSize"
+        (ngModelChange)="transformContacts()">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="5">5 items per page</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{mode === MODE.ADD ? 'Create': 'Edit'}} contact on
+      {{this.selectedGroup.name}} Group</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="contactForm" (ngSubmit)="saveContact(contactForm)">
+      <div class="form-outline mb-4">
+        <label class="form-label" required>Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+        <span class="error-text"
+          *ngIf="contactForm['controls'].email.touched && contactForm['controls'].name.hasError('required')">Please
+          enter Email</span>
+      </div>
+      <!-- Email input -->
+      <div class="form-outline mb-4">
+        <label class="form-label" required>Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+      </div>
+      <!-- Phone input -->
+      <div class="form-outline mb-4">
+        <label class="form-label">Phone</label>
+        <input class="form-control" type="tel" formControlName="phone" />
+        <span class="error-text"
+          *ngIf="contactForm['controls'].phone.touched && contactForm['controls'].phone.errors?.pattern">Please enter
+          valid
+          phone. Valid should have 10 digits
+        </span>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button [ngClass]="{'disabled' : contactForm.invalid }" type="button" class="btn btn-primary"
+      (click)="saveContact(contactForm, mode);modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

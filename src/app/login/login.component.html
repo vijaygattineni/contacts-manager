@@ -1,0 +1,8 @@
+<div class="form-container">
+  <section *ngIf="currentView === VIEW.SIGN_IN">
+    <app-sign-in (showSignUp)="showSignUpForm()"></app-sign-in>
+  </section>
+  <section *ngIf="currentView === VIEW.SIGN_UP">
+    <app-sign-up  (showSignIn)="showSignInForm()"></app-sign-up>
+  </section>
+</div>

@@ -1,0 +1,12 @@
+<div class="contacts-container">
+  <div style="text-align: right">
+    <span (click)="logout()"><u>Logout</u></span>
+    </div>
+  <div class="row">
+    <app-create-group (groupAdded)="updateGroups($event)"></app-create-group>
+  </div>
+  <div *ngFor="let group of contactsData;let index = index;">
+    {{index}}
+    <app-contact-group [groupDetail]="group"></app-contact-group>
+  </div>
+</div>
