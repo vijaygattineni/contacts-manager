@@ -92,7 +92,7 @@ export class ContactGroupComponent implements OnInit {
 
   deleteContact(contact: Contact, index: number) {
     this.groupDetail.contacts.splice(index, 1);
-    this.resetTransform();
+    this.transformContacts();
   }
 
   sort(inputField: any, directionAscending: boolean) {
