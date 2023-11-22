@@ -1,5 +1,5 @@
 {
-  "name": "inmar-contacts",
+  "name": "contacts",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
